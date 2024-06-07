@@ -1,10 +1,9 @@
 package ru.gb.Family_Tree.FamilyTree;
 
 import ru.gb.Family_Tree.builder.FamilyTreeBuilder;
-import ru.gb.Family_Tree.human.Human;
 import java.util.List;
 
-public class Service {
+public class Service<T extends Entity<T>> {
 
     private FamilyTreeGroup familyTreeGroup;
 
@@ -19,23 +18,24 @@ public class Service {
         return familyTreeGroup;
     }
 
-    public FamilyTree addHumanToNewTree(Human human) {
-        return addHumanByTree(human, true);
+    public FamilyTree addHumanToNewTree(T entity) {
+        return addHumanByTree(entity, true);
     }
 
-    public FamilyTree addHumanToLastTree(Human human) {
-        return addHumanByTree(human, familyTreeGroup.getFamilyTreeList().size() == 0);
+    public FamilyTree addHumanToLastTree(T entity) {
+        return addHumanByTree(entity, familyTreeGroup.getFamilyTreeList().size() == 0);
     }
 
-    public FamilyTree addHumanByTree(Human human, boolean isNewTree) {
+    public FamilyTree addHumanByTree(T entity, boolean isNewTree) {
         List<FamilyTree> familyTreeList = familyTreeGroup.getFamilyTreeList();
         FamilyTree tree;
         if (isNewTree) {
-            tree = familyTreeBuilder.build(human);
+            tree = familyTreeBuilder.build(entity);
             familyTreeList.add(tree);
         } else {
             tree = familyTreeList.get(familyTreeList.size() - 1);
-            familyTreeList.get(tree.getIndexId()).addHuman(familyTreeBuilder.getHumanBuilder().build(human));
+            familyTreeBuilder.getEntityBuilder().build(entity);
+            familyTreeList.get(tree.getIndexId()).addEntity(entity);
         }
         return tree;
     }
@@ -48,27 +48,27 @@ public class Service {
         familyTreeGroup.sortFamilyTreeById(familyTrees);
     }
 
-    public void sortFamilyTreesHumansById() {
-        familyTreeGroup.sortFamilyTreesHumansById();
+    public void sortFamilyTreesEntitiesById() {
+        familyTreeGroup.sortFamilyTreesEntitiesById();
     }
 
-    public void sortFamilyTreesHumansById(List<FamilyTree> familyTrees) {
-        familyTreeGroup.sortFamilyTreesHumansById(familyTrees);
+    public void sortFamilyTreesEntitiesById(List<FamilyTree> familyTrees) {
+        familyTreeGroup.sortFamilyTreesEntitiesById(familyTrees);
     }
 
-    public void sortFamilyTreesHumansByBirthDay() {
-        familyTreeGroup.sortFamilyTreesHumansByBirthDay();
+    public void sortFamilyTreesEntitiesByBirthDay() {
+        familyTreeGroup.sortFamilyTreesEntitiesByBirthDay();
     }
 
-    public void sortFamilyTreesHumansByBirthDay(List<FamilyTree> familyTrees) {
-        familyTreeGroup.sortFamilyTreesHumansByBirthDay(familyTrees);
+    public void sortFamilyTreesEntitiesByBirthDay(List<FamilyTree> familyTrees) {
+        familyTreeGroup.sortFamilyTreesEntitiesByBirthDay(familyTrees);
     }
 
-    public void sortFamilyTreesHumansByLastName() {
-        familyTreeGroup.sortFamilyTreesHumansByLastName();
+    public void sortFamilyTreesEntitiesByLastName() {
+        familyTreeGroup.sortFamilyTreesEntitiesByLastName();
     }
 
-    public void sortFamilyTreesHumansByLastName(List<FamilyTree> familyTrees) {
-        familyTreeGroup.sortFamilyTreesHumansByLastName(familyTrees);
+    public void sortFamilyTreesEntitiesByLastName(List<FamilyTree> familyTrees) {
+        familyTreeGroup.sortFamilyTreesEntitiesByLastName(familyTrees);
     }
 }

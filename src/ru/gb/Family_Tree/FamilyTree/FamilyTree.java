@@ -2,97 +2,107 @@ package ru.gb.Family_Tree.FamilyTree;
 
 import ru.gb.Family_Tree.api.IndexId;
 import ru.gb.Family_Tree.FamilyTree.Comporator.ComparatorIndexId;
-import ru.gb.Family_Tree.human.Human;
-import ru.gb.Family_Tree.human.Comparator.HumanComparatorByBirthDay;
-import ru.gb.Family_Tree.human.Comparator.HumanComparatorByLastName;
-import ru.gb.Family_Tree.human.Iterator.HumanIterator;
+import ru.gb.Family_Tree.human.Comparator.ComparatorByBirthDay;
+import ru.gb.Family_Tree.human.Comparator.ComparatorByLastName;
+import ru.gb.Family_Tree.human.Iterator.EntityIterator;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree implements Serializable, Iterable<Human>, Comparable<FamilyTree>, IndexId {
+public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T>, Comparable<FamilyTree>, IndexId {
 
     private static final long serialVersionUID = -8509829358230848460L;
 
     private long treeId;
-    private long humanId;
-    private List<Human> humans;
+    private long entityId;
+    private List<T> entities;
 
     public FamilyTree(long treeId) {
         this(treeId, new ArrayList<>());
     }
 
-    public FamilyTree(long treeId, List<Human> humans) {
+    public FamilyTree(long treeId, List<T> entities) {
         this.treeId = treeId;
-        if (humans == null || humans.size() == 0) {
-            this.humanId = 0;
+        if (this.entities == null || this.entities.size() == 0) {
+            this.entityId = 0;
         }
-        this.humans = humans == null ? new ArrayList<>() : humans;
+        this.entities = this.entities == null ? new ArrayList<>() : this.entities;
     }
 
     public long getId() {
         return treeId;
     }
 
-    public List<Human> getHumans() {
-        return humans;
+    public List<T> getEntities() {
+        return entities;
     }
 
-    public boolean addHuman(Human human) {
-        if (human != null && !humans.contains(human)) {
-            if (human.getId() == -1) {
-                human.setId(humanId++);
+    public boolean addEntity(T entity) {
+        if (entity != null && !entities.contains(entity)) {
+            if (entity.getId() == -1) {
+                entity.setId(entityId++);
             }
-            return this.humans.add(human);
+            return this.entities.add(entity);
         }
         return false;
     }
 
-    public FamilyTree addHumans(List<Human> humans) {
-        for (Human human : humans) {
-            addHuman(human);
+    public FamilyTree addEntities(List<T> entities) {
+        for (T entity : entities) {
+            addEntity(entity);
         }
         return this;
     }
 
-    public Human getHumanById(long id) {
-        for (Human human : humans) {
-            if (human.getId() == id) {
-                return human;
+    public T getHumanById(long id) {
+        for (T entity : entities) {
+            if (entity.getId() == id) {
+                return entity;
             }
         }
         return null;
     }
 
-    public List<Human> findChildrenByParent(Human parent, Human excludeHuman) {
-        List<Human> children = new ArrayList<>();
-        for (Human human : humans) {
-            if (human.isParent(parent) && !human.equals(excludeHuman)) {
-                children.add(human);
+    public List<T> findChildrenByParent(T parent, T excludeHuman) {
+        List<T> children = new ArrayList<>();
+        for (T entity : entities) {
+            if (entity.isParent(parent) && !entity.equals(excludeHuman)) {
+                children.add(entity);
             }
         }
         return children;
     }
 
-    public List<Human> findChildrenByParentId(long parentId) {
+    public List<T> findChildrenByParentId(long parentId) {
         return findChildrenByParent(getHumanById(parentId), null);
     }
 
-    public List<Human> findSiblingsById(long humanId) {
-        Human child = getHumanById(humanId);
-        return findChildrenByParent(child.getMother() != null ? child.getMother() : child.getFather(), child);
+    public List<T> findSiblingsById(long humanId) {
+        T child = getHumanById(humanId);
+        T parent = (T) (child.getMother() != null ? child.getMother() : child.getFather());
+        return findChildrenByParent(parent, child);
     }
 
-    public void sortHumansById() {
-        Collections.sort(humans, new ComparatorIndexId());
+    public void sortEntitiesById() {
+        Collections.sort(entities, new ComparatorIndexId());
     }
 
-    public void sortHumansByBirthDay() {
-        Collections.sort(humans, new HumanComparatorByBirthDay());
+    public void sortEntitiesByBirthDay() {
+        Collections.sort(entities, new ComparatorByBirthDay<T>());
     }
 
-    public void sortHumansByLastName() {
-        Collections.sort(humans, new HumanComparatorByLastName());
+    public void sortEntitiesByLastName() {
+        Collections.sort(entities, new ComparatorByLastName<T>());
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new EntityIterator(entities);
+    }
+
+    @Override
+    public int compareTo(FamilyTree tree) {
+        return Integer.compare(this.getIndexId(), tree.getIndexId());
     }
 
     @Override
@@ -104,8 +114,8 @@ public class FamilyTree implements Serializable, Iterable<Human>, Comparable<Fam
     public String toString() {
         return "FamilyTree{" +
                 "treeId=" + treeId +
-                ", size=" + humans.size() +
-                ", humans=" + humans +
+                ", size=" + entities.size() +
+                ", humans=" + entities +
                 '}';
     }
 
@@ -114,21 +124,11 @@ public class FamilyTree implements Serializable, Iterable<Human>, Comparable<Fam
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FamilyTree that = (FamilyTree) o;
-        return treeId == that.treeId && humanId == that.humanId && Objects.equals(humans, that.humans);
+        return treeId == that.treeId && entityId == that.entityId && Objects.equals(entities, that.entities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(treeId, humanId, humans);
-    }
-
-    @Override
-    public Iterator<Human> iterator() {
-        return new HumanIterator(humans);
-    }
-
-    @Override
-    public int compareTo(FamilyTree tree) {
-        return Integer.compare(this.getIndexId(), tree.getIndexId());
+        return Objects.hash(treeId, entityId, entities);
     }
 }

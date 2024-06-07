@@ -1,13 +1,13 @@
 package ru.gb.Family_Tree.human.Comparator;
 
-import ru.gb.Family_Tree.human.Human;
+import ru.gb.Family_Tree.FamilyTree.Entity;
 
 import java.util.Comparator;
 
-public class HumanComparatorByLastName implements Comparator<Human> {
+public class ComparatorByLastName<T extends Entity> implements Comparator<T> {
 
     @Override
-    public int compare(Human o1, Human o2) {
+    public int compare(T o1, T o2) {
         if (o1.getLastName() == null) {
             return -1;
         }

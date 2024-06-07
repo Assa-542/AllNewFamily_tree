@@ -1,10 +1,11 @@
 package ru.gb.Family_Tree.FamilyTree.Comporator;
 
+import ru.gb.Family_Tree.FamilyTree.Entity;
 import ru.gb.Family_Tree.api.IndexId;
 
 import java.util.Comparator;
 
-public class ComparatorIndexId implements Comparator<IndexId> {
+public class ComparatorIndexId<T extends Entity> implements Comparator<IndexId> {
 
     @Override
     public int compare(IndexId o1, IndexId o2) {

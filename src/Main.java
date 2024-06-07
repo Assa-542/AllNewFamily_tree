@@ -7,6 +7,7 @@ import ru.gb.Family_Tree.FamilyTree.Comporator.ComparatorIndexId;
 import ru.gb.Family_Tree.human.Gender;
 import ru.gb.Family_Tree.human.Human;
 import ru.gb.Family_Tree.Impl.FileHandler;
+import ru.gb.Family_Tree.FamilyTree.Entity;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -55,12 +56,12 @@ public class Main {
         child4.setMother(mother4);
         child4.setFather(father4);
 
-        Human child5 = new Human("Марфа", "Николаевна", "Иванова", Gender.MALE, LocalDate.of(1999, 11, 15), mother1, father1);
-        Human child6 = new Human("Елена", "Ярославич", "Петрова", Gender.MALE, LocalDate.of(2001, 5, 16), mother2, null);
+        Human child5 = new Human("Манна", "Николаевна", "Иванова", Gender.FEMALE, LocalDate.of(1999, 11, 15), mother1, father1);
+        Human child6 = new Human("Каролина", "Ярославич", "Петрова", Gender.FEMALE, LocalDate.of(2001, 5, 16), mother2, null);
         child6.setFather(father2);
-        Human child7 = new Human("Ольга", "Сидоровна", "Сидорова", Gender.MALE, LocalDate.of(2003, 4, 17), null, father3);
+        Human child7 = new Human("Катя", "Сидоровна", "Сидорова", Gender.FEMALE, LocalDate.of(2003, 4, 17), null, father3);
         child7.setMother(mother3);
-        Human child8 = new Human("Валентина", "Ярославовна", "Рая", Gender.MALE, LocalDate.of(2002, 1, 18));
+        Human child8 = new Human("Ника", "Ярославовна", "Рая", Gender.FEMALE, LocalDate.of(2002, 1, 18));
         child8.setMother(mother4);
         child8.setFather(father4);
 
@@ -81,7 +82,7 @@ public class Main {
         List<FamilyTree> familyTreeList = ext.readExternal();
 
         System.out.println("=========================SORT BY LAST NAME=============================");
-        service.sortFamilyTreesHumansByLastName(familyTreeList);
+        service.sortFamilyTreesEntitiesByLastName(familyTreeList);
         System.out.println(familyTreeList.toString());
         System.out.println("==================================================================\n");
 
@@ -106,17 +107,22 @@ public class Main {
         List<FamilyTree> familyTreeList2 = ext.readExternal();
 
         System.out.println("=========================SORT BY DATE=============================");
-        service.sortFamilyTreesHumansByBirthDay(familyTreeList2);
+        service.sortFamilyTreesEntitiesByBirthDay(familyTreeList2);
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
         Collections.reverse(familyTreeList2);
         System.out.println("=========================SORT FAMILY TREE BY ID=============================");
-        Collections.sort(familyTreeList2, new ComparatorIndexId());
+        Collections.sort(familyTreeList2, new ComparatorIndexId<Entity>());
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
 
+        for (FamilyTree familyTree : familyTreeList2) {
+            Collections.reverse(familyTree.getEntities());
+        }
+
+        System.out.println(familyTreeList2.toString());
         System.out.println("=========================SORT HUMANS BY ID=============================");
-        Collections.sort(familyTreeList2.get(0).getHumans(), new ComparatorIndexId());
+        service.sortFamilyTreesEntitiesById(familyTreeList2);
         System.out.println(familyTreeList2.toString());
         System.out.println("==================================================================\n");
     }
