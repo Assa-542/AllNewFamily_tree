@@ -1,6 +1,6 @@
-package ru.gb.Family_Tree.builder;
+package ru.gb.Family_Tree.model.builder;
 
-import ru.gb.Family_Tree.api.BuildId;
+import ru.gb.Family_Tree.model.Api.BuildId;
 
 public class EntityBuilder {
 

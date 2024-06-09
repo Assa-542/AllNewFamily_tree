@@ -1,7 +1,7 @@
-package ru.gb.Family_Tree.FamilyTree.Comporator;
+package ru.gb.Family_Tree.model.FamilyTree.Comporator;
 
-import ru.gb.Family_Tree.FamilyTree.Entity;
-import ru.gb.Family_Tree.api.IndexId;
+import ru.gb.Family_Tree.model.FamilyTree.Entity;
+import ru.gb.Family_Tree.model.Api.IndexId;
 
 import java.util.Comparator;
 

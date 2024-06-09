@@ -1,13 +1,15 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import ru.gb.Family_Tree.api.Externalizable;
-import ru.gb.Family_Tree.FamilyTree.FamilyTree;
-import ru.gb.Family_Tree.FamilyTree.Service;
-import ru.gb.Family_Tree.FamilyTree.Comporator.ComparatorIndexId;
-import ru.gb.Family_Tree.human.Gender;
-import ru.gb.Family_Tree.human.Human;
+import ru.gb.Family_Tree.model.FamilyTree.FamilyTree;
+import ru.gb.Family_Tree.model.FamilyTree.Service;
+import ru.gb.Family_Tree.model.FamilyTree.Comporator.ComparatorIndexId;
+import ru.gb.Family_Tree.model.human.Gender;
+import ru.gb.Family_Tree.model.human.Human;
 import ru.gb.Family_Tree.Impl.FileHandler;
-import ru.gb.Family_Tree.FamilyTree.Entity;
+import ru.gb.Family_Tree.model.FamilyTree.Entity;
+import ru.gb.Family_Tree.View.ConsoleUI;
+import ru.gb.Family_Tree.View.View;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -16,7 +18,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        testData();
+        View view = new ConsoleUI();
+        view.start();
+        //testData();
     }
 
     public static void testData() {
@@ -74,12 +78,10 @@ public class Main {
             service.addHumanToLastTree(human);
         }
 
-        Externalizable ext = (Externalizable) new FileHandler();
-        // Записываем объект List<FamilyTree> в файл
+        Externalizable ext = new FileHandler();
         ext.writeAllExternal(service.getFamilyTreeGroup().getFamilyTreeList());
 
-        // Получаем объект из файла
-        List<FamilyTree> familyTreeList = ext.readExternal();
+        List<FamilyTree<Human>> familyTreeList = ext.readExternal();
 
         System.out.println("=========================SORT BY LAST NAME=============================");
         service.sortFamilyTreesEntitiesByLastName(familyTreeList);
@@ -100,11 +102,9 @@ public class Main {
             service.addHumanToLastTree(human);
         }
 
-        // Обновляем объект List<FamilyTree> и перезаписываем в файл
         ext.updateExternal(service.addHumanToLastTree(child10));
 
-        // Получаем объект из файла
-        List<FamilyTree> familyTreeList2 = ext.readExternal();
+        List<FamilyTree<Human>> familyTreeList2 = ext.readExternal();
 
         System.out.println("=========================SORT BY DATE=============================");
         service.sortFamilyTreesEntitiesByBirthDay(familyTreeList2);
@@ -119,7 +119,6 @@ public class Main {
         for (FamilyTree familyTree : familyTreeList2) {
             Collections.reverse(familyTree.getEntities());
         }
-
         System.out.println(familyTreeList2.toString());
         System.out.println("=========================SORT HUMANS BY ID=============================");
         service.sortFamilyTreesEntitiesById(familyTreeList2);

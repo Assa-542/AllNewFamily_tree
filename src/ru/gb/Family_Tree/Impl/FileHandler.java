@@ -1,7 +1,8 @@
 package ru.gb.Family_Tree.Impl;
 
-import ru.gb.Family_Tree.FamilyTree.FamilyTree;
+import ru.gb.Family_Tree.model.FamilyTree.FamilyTree;
 import ru.gb.Family_Tree.api.Externalizable;
+import ru.gb.Family_Tree.model.human.Human;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class FileHandler implements Externalizable {
     }
 
     @Override
-    public void writeAllExternal(List<FamilyTree> familyTreeList) {
+    public void writeAllExternal(List<FamilyTree<Human>> familyTreeList) {
         File file = new File(outputDir);
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
             out.writeObject(familyTreeList);
@@ -33,18 +34,18 @@ public class FileHandler implements Externalizable {
     }
 
     @Override
-    public void updateExternal(FamilyTree familyTree) {
-        List<FamilyTree> familyTreeList = readExternal();
+    public void updateExternal(FamilyTree<Human> familyTree) {
+        List<FamilyTree<Human>> familyTreeList = readExternal();
         familyTreeList.add(familyTree);
         writeAllExternal(familyTreeList);
     }
 
     @Override
-    public List<FamilyTree> readExternal() {
-        List<FamilyTree> familyTreeList = new ArrayList<>();
+    public List<FamilyTree<Human>> readExternal() {
+        List<FamilyTree<Human>> familyTreeList = new ArrayList<>();
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(outputDir))) {
             // Чтобы можно было добавлять новые FamilyTree нужно не присвоить вычитываемый объект, а именно добавлять к новому List
-            familyTreeList.addAll((List<FamilyTree>) in.readObject());
+            familyTreeList.addAll((List<FamilyTree<Human>>) in.readObject());
         } catch (FileNotFoundException e) {
             System.out.println("File path '" + outputDir + "' NotFound!");
             e.printStackTrace();

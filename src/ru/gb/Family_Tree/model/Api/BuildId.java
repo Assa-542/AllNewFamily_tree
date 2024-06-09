@@ -1,4 +1,4 @@
-package ru.gb.Family_Tree.api;
+package ru.gb.Family_Tree.model.Api;
 
 public interface BuildId {
 

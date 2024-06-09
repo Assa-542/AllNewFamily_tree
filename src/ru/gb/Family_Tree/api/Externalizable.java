@@ -1,15 +1,17 @@
 package ru.gb.Family_Tree.api;
 
-import ru.gb.Family_Tree.FamilyTree.FamilyTree;
+import ru.gb.Family_Tree.model.FamilyTree.FamilyTree;
+import ru.gb.Family_Tree.model.human.Human;
 
 import java.io.Serializable;
 import java.util.List;
 
 public interface Externalizable extends Serializable {
 
-    void writeAllExternal(List<FamilyTree> familyTreeList);
+    void writeAllExternal(List<FamilyTree<Human>> familyTreeList);
 
-    void updateExternal(FamilyTree familyTreeList);
+    void updateExternal(FamilyTree<Human> familyTreeList);
 
-    List<FamilyTree> readExternal();
+
+    List<FamilyTree<Human>> readExternal();
 }

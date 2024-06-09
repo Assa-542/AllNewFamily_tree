@@ -1,15 +1,15 @@
-package ru.gb.Family_Tree.FamilyTree;
+package ru.gb.Family_Tree.model.FamilyTree;
 
-import ru.gb.Family_Tree.api.IndexId;
-import ru.gb.Family_Tree.FamilyTree.Comporator.ComparatorIndexId;
-import ru.gb.Family_Tree.human.Comparator.ComparatorByBirthDay;
-import ru.gb.Family_Tree.human.Comparator.ComparatorByLastName;
-import ru.gb.Family_Tree.human.Iterator.EntityIterator;
+import ru.gb.Family_Tree.model.Api.IndexId;
+import ru.gb.Family_Tree.model.FamilyTree.Comporator.ComparatorIndexId;
+import ru.gb.Family_Tree.model.human.Comparator.ComparatorByBirthDay;
+import ru.gb.Family_Tree.model.human.Comparator.ComparatorByLastName;
+import ru.gb.Family_Tree.model.human.Iterator.EntityIterator;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T>, Comparable<FamilyTree>, IndexId {
+public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T>, Comparable<FamilyTree<T>>, IndexId {
 
     private static final long serialVersionUID = -8509829358230848460L;
 
@@ -26,7 +26,10 @@ public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T
         if (this.entities == null || this.entities.size() == 0) {
             this.entityId = 0;
         }
-        this.entities = this.entities == null ? new ArrayList<>() : this.entities;
+        if (this.entities == null) {
+            this.entities = new ArrayList<>();
+        }
+        this.entities.addAll(entities);
     }
 
     public long getId() {
@@ -54,7 +57,7 @@ public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T
         return this;
     }
 
-    public T getHumanById(long id) {
+    public T getEntityById(long id) {
         for (T entity : entities) {
             if (entity.getId() == id) {
                 return entity;
@@ -74,11 +77,11 @@ public class FamilyTree<T extends Entity<T>> implements Serializable, Iterable<T
     }
 
     public List<T> findChildrenByParentId(long parentId) {
-        return findChildrenByParent(getHumanById(parentId), null);
+        return findChildrenByParent(getEntityById(parentId), null);
     }
 
     public List<T> findSiblingsById(long humanId) {
-        T child = getHumanById(humanId);
+        T child = getEntityById(humanId);
         T parent = (T) (child.getMother() != null ? child.getMother() : child.getFather());
         return findChildrenByParent(parent, child);
     }

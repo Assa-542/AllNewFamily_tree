@@ -1,7 +1,7 @@
-package ru.gb.Family_Tree.FamilyTree;
+package ru.gb.Family_Tree.model.FamilyTree;
 
-import ru.gb.Family_Tree.api.BuildId;
-import ru.gb.Family_Tree.human.Gender;
+import ru.gb.Family_Tree.model.Api.BuildId;
+import ru.gb.Family_Tree.model.human.Gender;
 
 import java.time.LocalDate;
 import java.util.List;
