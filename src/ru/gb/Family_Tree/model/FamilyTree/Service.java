@@ -6,8 +6,8 @@ import ru.gb.Family_Tree.model.builder.FamilyTreeBuilder;
 import ru.gb.Family_Tree.model.human.Gender;
 import ru.gb.Family_Tree.model.human.Human;
 
-import java.util.List;
 import java.time.LocalDate;
+import java.util.List;
 
 import static ru.gb.Family_Tree.model.human.Gender.FEMALE;
 import static ru.gb.Family_Tree.model.human.Gender.MALE;
@@ -21,7 +21,7 @@ public class Service {
     public Service() {
         this.familyTreeGroup = new FamilyTreeGroup();
         this.familyTreeBuilder = new FamilyTreeBuilder();
-        this.external = new FileHandler();
+        this.external = new FileHandler(this);
     }
 
     public FamilyTreeGroup getFamilyTreeGroup() {
@@ -107,7 +107,6 @@ public class Service {
     }
 
     public void importList() {
-        List<FamilyTree> familyTreeList = external.readExternal();
-        getFamilyTreeGroup().getFamilyTreeList().addAll(familyTreeList);
+        external.readExternal();
     }
 }

@@ -5,7 +5,7 @@ import ru.gb.Family_Tree.View.ConsoleUI;
 public class EntitySortByBirthDay extends Command{
 
     public EntitySortByBirthDay(ConsoleUI consoleUI) {
-        super("Сортировка по дате", consoleUI);
+        super("Сортировка по дате рождения", consoleUI);
     }
 
     @Override

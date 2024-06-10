@@ -1,5 +1,6 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import ru.gb.Family_Tree.model.FamilyTree.Entity;
 import ru.gb.Family_Tree.api.Externalizable;
 import ru.gb.Family_Tree.model.FamilyTree.FamilyTree;
 import ru.gb.Family_Tree.model.FamilyTree.Service;
@@ -7,7 +8,6 @@ import ru.gb.Family_Tree.model.FamilyTree.Comporator.ComparatorIndexId;
 import ru.gb.Family_Tree.model.human.Gender;
 import ru.gb.Family_Tree.model.human.Human;
 import ru.gb.Family_Tree.Impl.FileHandler;
-import ru.gb.Family_Tree.model.FamilyTree.Entity;
 import ru.gb.Family_Tree.View.ConsoleUI;
 import ru.gb.Family_Tree.View.View;
 
@@ -26,19 +26,19 @@ public class Main {
     public static void testData() {
         Service service = new Service();
 
-        Human father0 = new Human("Антон", "Юрьевич", "Степанов", Gender.MALE, LocalDate.of(1945, 10, 24));
-        Human mother0 = new Human("Марина", "Ильинична", "Степанова", Gender.FEMALE, LocalDate.of(1950, 2, 6));
+        Human father0 = new Human("Артем", "Юрьевич", "Логвинов", Gender.MALE, LocalDate.of(1950, 12, 12));
+        Human mother0 = new Human("Юлия", "Ильинична", "Логвинова", Gender.FEMALE, LocalDate.of(1960, 10, 15));
         mother0.setSpouse(father0);
 
-        Human father1 = new Human("Иван", "Степанович", "", Gender.MALE, LocalDate.of(1955, 2, 21));
-        Human father2 = new Human("Петрович", "Афанасьев", "Петров", Gender.MALE, LocalDate.of(1980, 10, 31));
-        Human father3 = new Human("Сергей", "Сидорович", "Сергеевич", Gender.MALE, LocalDate.of(1977, 3, 21));
-        Human father4 = new Human("Дима", "Ярославович", "Ярый", Gender.MALE, LocalDate.of(1980, 3, 12));
+        Human father1 = new Human("Кирилл", "Степанович", "Ивка", Gender.MALE, LocalDate.of(1973, 6, 2));
+        Human father2 = new Human("Петр", "Петрович", "Петров", Gender.MALE, LocalDate.of(1974, 4, 1));
+        Human father3 = new Human("Сидр", "Кукей", "Пидров", Gender.MALE, LocalDate.of(1971, 2, 11));
+        Human father4 = new Human("Ярик", "Ярославович", "Яравицкий", Gender.MALE, LocalDate.of(1980, 1, 7));
 
-        Human mother1 = new Human("Агата", "Петровна", "Иванова", Gender.FEMALE, LocalDate.of(1964, 3, 2));
-        Human mother2 = new Human("Марина", "Степановна", "Петрова", Gender.FEMALE, LocalDate.of(1983, 11, 19));
-        Human mother3 = new Human("Кристина", "Николаевна", "Сидорова", Gender.FEMALE, LocalDate.of(1983, 12, 21));
-        Human mother4 = new Human("Валентина", "Антоновна", "Ярая", Gender.FEMALE, LocalDate.of(1985, 8, 8));
+        Human mother1 = new Human("Марфа", "Петровна", "Иванова", Gender.FEMALE, LocalDate.of(1978, 5, 5));
+        Human mother2 = new Human("Елена", "Степановна", "Петрова", Gender.FEMALE, LocalDate.of(1981, 6, 6));
+        Human mother3 = new Human("Катя", "Николаевна", "Сидорова", Gender.FEMALE, LocalDate.of(1983, 7, 7));
+        Human mother4 = new Human("Каролина", "Антов", "Ярик", Gender.FEMALE, LocalDate.of(1985, 8, 8));
 
         father1.setFather(father0);
         father1.setMother(mother0);
@@ -51,21 +51,21 @@ public class Main {
         mother3.setSpouse(father3);
         mother4.setSpouse(father4);
 
-        Human child1 = new Human("Митрофан", "Иванович", "Иванов", Gender.MALE, LocalDate.of(1996, 1, 11), mother1, father1);
-        Human child2 = new Human("Петр", "Петрович", "Петров", Gender.MALE, LocalDate.of(1998, 2, 12), mother2, null);
+        Human child1 = new Human("Митрофан", "Иванович", "Иванов", Gender.MALE, LocalDate.of(1995, 12, 1), mother1, father1);
+        Human child2 = new Human("Петр", "Петрович", "Петров", Gender.MALE, LocalDate.of(1997, 4, 1), mother2, null);
         child2.setFather(father2);
-        Human child3 = new Human("Сидр", "Сидорович", "Сидоров", Gender.MALE, LocalDate.of(1999, 10, 13), null, father3);
+        Human child3 = new Human("Сидр", "Сидорович", "Сидоров", Gender.MALE, LocalDate.of(1993, 3, 31), null, father3);
         child3.setMother(mother3);
-        Human child4 = new Human("Ярослав", "Логвинов", "Ярый", Gender.MALE, LocalDate.of(2001, 4, 14));
+        Human child4 = new Human("Ярослав", "Ярославович", "Ярый", Gender.MALE, LocalDate.of(2002, 2, 10));
         child4.setMother(mother4);
         child4.setFather(father4);
 
-        Human child5 = new Human("Манна", "Николаевна", "Иванова", Gender.FEMALE, LocalDate.of(1999, 11, 15), mother1, father1);
-        Human child6 = new Human("Каролина", "Ярославич", "Петрова", Gender.FEMALE, LocalDate.of(2001, 5, 16), mother2, null);
+        Human child5 = new Human("Мария", "Ивановна", "Иванова", Gender.MALE, LocalDate.of(1998, 5, 15), mother1, father1);
+        Human child6 = new Human("Елена", "Петровна", "Петрова", Gender.MALE, LocalDate.of(2001, 6, 16), mother2, null);
         child6.setFather(father2);
-        Human child7 = new Human("Катя", "Сидоровна", "Сидорова", Gender.FEMALE, LocalDate.of(2003, 4, 17), null, father3);
+        Human child7 = new Human("Ольга", "Сидоровна", "Пилл", Gender.MALE, LocalDate.of(2003, 7, 17), null, father3);
         child7.setMother(mother3);
-        Human child8 = new Human("Ника", "Ярославовна", "Рая", Gender.FEMALE, LocalDate.of(2002, 1, 18));
+        Human child8 = new Human("Алла", "Ярославовна", "Ярый", Gender.MALE, LocalDate.of(2005, 8, 18));
         child8.setMother(mother4);
         child8.setFather(father4);
 
@@ -78,9 +78,11 @@ public class Main {
             service.addHumanToLastTree(human);
         }
 
-        Externalizable ext = new FileHandler();
+        Externalizable ext = new FileHandler(service);
+        // Записываем объект List<FamilyTree> в файл
         ext.writeAllExternal(service.getFamilyTreeGroup().getFamilyTreeList());
 
+        // Получаем объект из файла
         List<FamilyTree<Human>> familyTreeList = ext.readExternal();
 
         System.out.println("=========================SORT BY LAST NAME=============================");
@@ -102,8 +104,10 @@ public class Main {
             service.addHumanToLastTree(human);
         }
 
+        // Обновляем объект List<FamilyTree> и перезаписываем в файл
         ext.updateExternal(service.addHumanToLastTree(child10));
 
+        // Получаем объект из файла
         List<FamilyTree<Human>> familyTreeList2 = ext.readExternal();
 
         System.out.println("=========================SORT BY DATE=============================");
