@@ -1,5 +1,5 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+package ru.gb.Family_Tree;
+
 import ru.gb.Family_Tree.model.FamilyTree.Entity;
 import ru.gb.Family_Tree.api.Externalizable;
 import ru.gb.Family_Tree.model.FamilyTree.FamilyTree;
@@ -24,7 +24,7 @@ public class Main {
     }
 
     public static void testData() {
-        Service service = new Service();
+        Service service = new Service(new FileHandler());
 
         Human father0 = new Human("Артем", "Юрьевич", "Логвинов", Gender.MALE, LocalDate.of(1950, 12, 12));
         Human mother0 = new Human("Юлия", "Ильинична", "Логвинова", Gender.FEMALE, LocalDate.of(1960, 10, 15));

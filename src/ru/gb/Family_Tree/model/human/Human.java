@@ -1,7 +1,7 @@
 package ru.gb.Family_Tree.model.human;
 
 import ru.gb.Family_Tree.model.Api.IndexId;
-import ru.gb.Family_Tree.model.Api.BuildId;
+import ru.gb.Family_Tree.model.builder.BuildId;
 import ru.gb.Family_Tree.model.FamilyTree.Entity;
 
 import java.io.Serializable;

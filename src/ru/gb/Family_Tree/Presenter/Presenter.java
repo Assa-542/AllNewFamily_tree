@@ -1,5 +1,6 @@
 package ru.gb.Family_Tree.Presenter;
 
+import ru.gb.Family_Tree.Impl.FileHandler;
 import ru.gb.Family_Tree.model.FamilyTree.Service;
 import ru.gb.Family_Tree.model.human.Gender;
 import ru.gb.Family_Tree.model.human.Human;
@@ -14,7 +15,7 @@ public class Presenter {
 
     public Presenter (View view) {
         this.view = view;
-        this.service = new Service();
+        this.service = new Service(new FileHandler());
     }
 
     public void addEntity(String name, String patronymic, String lastName, Gender gender, LocalDate birthDay, LocalDate deathDay) {

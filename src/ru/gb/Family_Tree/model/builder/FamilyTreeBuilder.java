@@ -1,6 +1,5 @@
 package ru.gb.Family_Tree.model.builder;
 
-import ru.gb.Family_Tree.model.Api.BuildId;
 import ru.gb.Family_Tree.model.FamilyTree.FamilyTree;
 
 import java.util.ArrayList;
